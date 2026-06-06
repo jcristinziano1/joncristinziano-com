@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  status?: string;
+  description: string;
+  href?: string;
+  showImage?: boolean;
+}
+
+const { title, status, description, href, showImage = true } = Astro.props;
+const Tag = href ? "a" : "article";
+---
+
+<Tag href={href} class="surface premium-hover group block rounded-lg p-5">
+  {showImage && (
+    <div class="mb-6 aspect-[16/9] rounded-md border border-border bg-[linear-gradient(135deg,var(--surface-strong),var(--surface),color-mix(in_srgb,var(--accent)_14%,var(--surface)))]">
+      <div class="grid h-full place-items-center text-xs font-medium uppercase tracking-[0.16em] text-muted">
+        Research map
+      </div>
+    </div>
+  )}
+  <div class="flex items-start justify-between gap-4">
+    <h3 class="text-xl font-semibold text-text">{title}</h3>
+    {status && <span class="rounded-full border border-success/30 px-2.5 py-1 text-xs font-medium text-success">{status}</span>}
+  </div>
+  <p class="mt-3 leading-7 text-muted">{description}</p>
+  {href && <p class="mt-5 text-sm font-semibold text-accent">Open project</p>}
+</Tag>

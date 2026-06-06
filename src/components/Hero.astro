@@ -1,0 +1,48 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  tagline?: string;
+  copy: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  tagline,
+  copy,
+  primaryHref,
+  primaryLabel,
+  secondaryHref,
+  secondaryLabel
+} = Astro.props;
+---
+
+<section class="container grid min-h-[calc(100svh-4rem)] items-center gap-10 py-16 md:py-24">
+  <div class="max-w-[860px]">
+    {eyebrow && <p class="eyebrow mb-5">{eyebrow}</p>}
+    <h1 class="max-w-[820px] text-5xl font-semibold leading-[1.02] tracking-normal text-text md:text-7xl">
+      {title}
+    </h1>
+    {tagline && <p class="mt-6 text-2xl font-medium leading-snug text-text md:text-3xl">{tagline}</p>}
+    <p class="mt-6 max-w-[650px] text-lg leading-8 text-muted md:text-xl">{copy}</p>
+    {(primaryHref || secondaryHref) && (
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        {primaryHref && primaryLabel && (
+          <a class="focus-ring rounded-md bg-text px-5 py-3 text-sm font-semibold text-background transition hover:bg-accent" href={primaryHref}>
+            {primaryLabel}
+          </a>
+        )}
+        {secondaryHref && secondaryLabel && (
+          <a class="focus-ring rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold text-text transition hover:border-accent/60 hover:bg-surface-strong" href={secondaryHref}>
+            {secondaryLabel}
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</section>

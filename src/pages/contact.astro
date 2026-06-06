@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { site } from "@/content/site";
+---
+
+<Layout title="Contact | Jon Cristinziano" description="Connect with Jon Cristinziano.">
+  <section class="container grid min-h-[calc(100svh-10rem)] items-center py-16">
+    <div class="max-w-[700px]">
+      <p class="eyebrow mb-5">Contact</p>
+      <h1 class="text-5xl font-semibold leading-tight text-text md:text-7xl">Let's connect.</h1>
+      <p class="mt-6 text-lg leading-8 text-muted">
+        Direct links only. The best places to reach me are LinkedIn and email.
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a class="focus-ring rounded-md bg-text px-5 py-3 text-sm font-semibold text-background transition hover:bg-accent" href={site.links.linkedin}>
+          LinkedIn
+        </a>
+        <a class="focus-ring rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold text-text transition hover:border-accent/60" href={`mailto:${site.email}`}>
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

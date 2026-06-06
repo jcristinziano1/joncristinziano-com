@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { projects } from "@/content/site";
+---
+
+<Layout title="Projects | Jon Cristinziano" description="Projects and research from Jon Cristinziano.">
+  <section class="container py-16 md:py-24">
+    <SectionHeader
+      eyebrow="Projects"
+      title="Companies and systems in progress."
+      description="Focused projects at the intersection of trust, commerce, evidence, and software."
+    />
+  </section>
+
+  <section class="container pb-20">
+    <div class="grid gap-5 md:grid-cols-2">
+      {projects.map((project) => <ProjectCard {...project} />)}
+    </div>
+  </section>
+</Layout>

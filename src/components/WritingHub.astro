@@ -1,0 +1,204 @@
+---
+import EssayCard from "@/components/EssayCard.astro";
+import { education, essays, experience, resumeSkills, site } from "@/content/site";
+
+const navItems = [
+  { href: "#writing", label: "Writing", panel: "writing" },
+  { href: "#resume", label: "Resume", panel: "resume" }
+];
+
+const experienceGroups = experience.reduce<
+  {
+    company: string;
+    location: string;
+    roles: (typeof experience)[number][];
+  }[]
+>((groups, item) => {
+  const lastGroup = groups.at(-1);
+  if (lastGroup && lastGroup.company === item.company && lastGroup.location === item.location) {
+    lastGroup.roles.push(item);
+  } else {
+    groups.push({ company: item.company, location: item.location, roles: [item] });
+  }
+  return groups;
+}, []);
+
+---
+
+<section class="container py-10 md:py-14">
+  <aside class="grid max-w-[760px] gap-5 sm:grid-cols-[128px_1fr] sm:items-center">
+    <img
+      class="aspect-square w-full max-w-32 rounded-md border border-border object-cover"
+      src={site.photo}
+      alt="Portrait of Jon Cristinziano"
+      loading="eager"
+      onerror="this.setAttribute('src','/profile-placeholder.svg')"
+    />
+    <div>
+      <h1 class="mb-3 text-2xl font-semibold tracking-normal text-text">{site.name}</h1>
+      <p class="text-sm leading-6 text-muted">{site.bio}</p>
+      <div class="mt-4 flex items-center gap-2">
+        <a
+          class="focus-ring inline-flex h-7 w-7 items-center justify-center text-muted transition hover:text-accent"
+          href={site.links.linkedin}
+          aria-label="LinkedIn profile"
+        >
+          <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.45 20.45h-3.56v-5.58c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V9H7.1v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0Z" />
+          </svg>
+        </a>
+        <a
+          class="focus-ring inline-flex h-7 w-7 items-center justify-center text-muted transition hover:text-accent"
+          href={site.links.github}
+          aria-label="GitHub profile"
+        >
+          <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.45 11.45 0 0 1 12 5.8c1.02 0 2.04.14 3 .39 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.82 1.1.82 2.22v3.3c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z" />
+          </svg>
+        </a>
+        <a
+          class="focus-ring inline-flex h-7 w-7 items-center justify-center text-muted transition hover:text-accent"
+          href={`mailto:${site.email}`}
+          aria-label="Email Jon Cristinziano"
+        >
+          <svg aria-hidden="true" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16v12H4z" />
+            <path d="m4 7 8 6 8-6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </aside>
+  <nav class="mt-5 flex max-w-[760px] flex-wrap gap-x-6 gap-y-3 border-b border-border pb-5" aria-label="Primary">
+    {navItems.map((item) => (
+      <a class="focus-ring link-hover text-sm font-semibold text-muted" href={item.href} data-nav={item.panel}>{item.label}</a>
+    ))}
+  </nav>
+</section>
+
+<section id="resume" class="container -mt-8 scroll-mt-24 pb-20 md:-mt-10" data-panel="resume" hidden>
+  <div class="max-w-[900px]">
+    <div class="mb-7 flex flex-col gap-4 border-b border-border pb-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h2 class="text-xl font-semibold text-text md:text-2xl">Professional background</h2>
+        <p class="mt-3 max-w-[640px] text-sm leading-6 text-muted">
+          Product and operations leader with experience across AI/ML safety systems, marketplace operations, analytics, and chemical engineering.
+        </p>
+      </div>
+      <a class="focus-ring text-sm font-semibold text-muted transition hover:text-accent" href="/jon-cristinziano-resume.pdf">
+        Download PDF
+      </a>
+    </div>
+
+    <div class="grid gap-8">
+      <section>
+        <h3 class="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Experience</h3>
+        <div class="space-y-8">
+          {experienceGroups.map((group) => (
+            <article class="grid gap-4 md:grid-cols-[120px_1fr] md:gap-7">
+              <div>
+                <p class="text-sm font-semibold text-text">{group.company}</p>
+                <p class="mt-1 text-xs text-muted">{group.location}</p>
+              </div>
+              <div class="space-y-0">
+                {group.roles.map((item) => {
+                  return (
+                    <div class="relative grid gap-3 border-l border-border pb-7 pl-6 last:pb-0 md:grid-cols-[130px_1fr] md:gap-7">
+                      <span class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border border-accent bg-background"></span>
+                      <p class="text-xs font-semibold uppercase tracking-[0.08em] text-muted">{item.period}</p>
+                      <div>
+                        <h4 class="text-base font-semibold text-text">{item.role}</h4>
+                        <p class="mt-2 text-sm leading-6 text-muted">{item.summary}</p>
+                        <details class="mt-3 group">
+                          <summary class="focus-ring inline-flex cursor-pointer list-none items-center gap-1 text-xs font-semibold text-muted transition hover:text-accent [&::-webkit-details-marker]:hidden">
+                            <span class="transition group-open:rotate-90" aria-hidden="true">›</span>
+                            Details
+                          </summary>
+                          <ul class="mt-3 space-y-1.5 text-sm leading-6 text-muted">
+                            {item.details.map((detail) => <li>{detail}</li>)}
+                          </ul>
+                        </details>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="border-t border-border pt-7">
+        <h3 class="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Education</h3>
+        <div class="grid gap-6">
+          {education.map((item) => (
+            <article class="grid gap-2 md:grid-cols-[150px_1fr] md:gap-8">
+              <p class="text-xs font-semibold uppercase tracking-[0.08em] text-muted">{item.period}</p>
+              <div>
+                <h4 class="text-sm font-semibold text-text">{item.institution}</h4>
+                <p class="mt-1 text-xs font-medium text-muted">{item.location}</p>
+                <p class="mt-2 text-sm leading-6 text-muted">{item.credential}</p>
+                <ul class="mt-2 space-y-1 text-sm leading-6 text-muted">
+                  {item.details.map((detail) => <li>{detail}</li>)}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="border-t border-border pt-7">
+        <h3 class="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Skills</h3>
+        <ul class="space-y-2 text-sm leading-6 text-muted">
+          {resumeSkills.map((skill) => <li>{skill}</li>)}
+        </ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section id="writing" class="container -mt-8 pb-20 md:-mt-10" data-panel="writing">
+  <div class="mb-6 max-w-[700px]">
+    <h2 class="text-xl font-semibold text-text md:text-2xl">Thoughts</h2>
+    <p class="mt-2 text-sm leading-6 text-muted">
+      Notes on technology, markets, and the ideas I keep coming back to.
+    </p>
+  </div>
+  <div class="grid max-w-[900px] gap-4">
+    {essays.map((essay) => <EssayCard {...essay} />)}
+  </div>
+</section>
+
+<script>
+  const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-panel]"));
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav]"));
+
+  const setView = (view: string) => {
+    const nextView = view === "resume" ? "resume" : "writing";
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.panel !== nextView;
+    });
+    navLinks.forEach((link) => {
+      const isActive = link.dataset.nav === nextView;
+      link.classList.toggle("text-text", isActive);
+      link.classList.toggle("text-muted", !isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!link.dataset.nav) return;
+      event.preventDefault();
+      const view = link.dataset.nav;
+      setView(view);
+      history.replaceState(null, "", view === "resume" ? "#resume" : "#writing");
+    });
+  });
+
+  setView(location.hash === "#resume" ? "resume" : "writing");
+</script>

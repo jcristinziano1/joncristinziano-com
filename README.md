@@ -9,7 +9,6 @@ Production Astro site for Jon Cristinziano.
 - Tailwind CSS 4
 - Static site generation
 - Cloudflare Pages compatible
-- Cloudflare adapter dependency included for future runtime features
 
 ## Commands
 
@@ -39,7 +38,7 @@ npm run build
 6. Deploy.
 7. Add the custom domain `joncristinziano.com` in Cloudflare Pages and follow the DNS prompts.
 
-The production build uses Astro static output, which is the correct Cloudflare Pages path for this site. The Cloudflare adapter package is included, and `astro.cloudflare.config.mjs` shows the adapter configuration to use if the site later adds Cloudflare runtime features such as bindings, server islands, or middleware.
+The production build uses Astro static output, which is the correct Cloudflare Pages path for this site. Do not use a Workers deploy command or Cloudflare adapter config for this site unless runtime features such as bindings, server islands, or middleware are added later.
 
 ## Content Notes
 

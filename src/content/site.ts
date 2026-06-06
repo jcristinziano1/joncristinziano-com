@@ -1,3 +1,10 @@
+import { getPdfWritingEntries, type WritingEntry } from "@/content/pdfWriting";
+
+interface EssayEntry extends WritingEntry {
+  body: string[];
+  source: "essay";
+}
+
 export const site = {
   name: "Jon Cristinziano",
   title: "Writing | Jon Cristinziano",
@@ -15,7 +22,7 @@ export const site = {
   }
 };
 
-export const essays = [
+export const essays: EssayEntry[] = [
   {
     title: "AI Companies May Have the World's First Real-Time Map of Startup Formation",
     date: "2026-06-05",
@@ -24,6 +31,7 @@ export const essays = [
     readingTime: "5 min read",
     href: "/posts/ai-companies-real-time-map-startup-formation",
     featured: true,
+    source: "essay",
     body: [
       "For decades, venture capital has operated on remarkably thin data.",
       "Investors evaluate early-stage founders through a series of static snapshots: a polished resume, a warm introduction, a pitch deck, and a handful of meetings. From those brief interactions, they try to predict a difficult question: can this team build a defining company?",
@@ -69,6 +77,10 @@ export const essays = [
     ]
   }
 ];
+
+export const writingEntries = [...essays, ...getPdfWritingEntries()].sort(
+  (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title)
+);
 
 export const projects = [
   {

@@ -1,6 +1,6 @@
 ---
 import EssayCard from "@/components/EssayCard.astro";
-import { education, essays, experience, resumeSkills, site } from "@/content/site";
+import { education, experience, resumeSkills, site, writingEntries } from "@/content/site";
 
 const navItems = [
   { href: "#writing", label: "Writing", panel: "writing" },
@@ -165,7 +165,7 @@ const experienceGroups = experience.reduce<
     </p>
   </div>
   <div class="grid max-w-[900px] gap-4">
-    {essays.map((essay) => <EssayCard {...essay} />)}
+    {writingEntries.map((entry) => <EssayCard {...entry} />)}
   </div>
 </section>
 

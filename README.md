@@ -55,3 +55,17 @@ Essay cards currently use mock data from `src/content/site.ts`. To integrate Sub
   featured?: boolean;
 }
 ```
+
+## PDF Writing
+
+Drop PDF articles into the root `writing/` folder and they will be added to the Writing section during `npm run build`.
+
+Use filenames like:
+
+```text
+YYYY-MM-DD-article-title.pdf
+```
+
+For example, `2026-06-06-marketplaces-and-trust.pdf` creates a card titled `Marketplaces And Trust` and emits the PDF at `/writing/marketplaces-and-trust.pdf`.
+
+To override the generated title, date, description, or reading time, add a JSON file with the same base name. See `writing/README.md` for the exact format.

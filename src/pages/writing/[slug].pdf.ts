@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { getPdfWritingEntries } from "@/content/pdfWriting";
 
 export function getStaticPaths() {
@@ -9,13 +8,14 @@ export function getStaticPaths() {
 }
 
 export function GET({ props }: { props: { entry: ReturnType<typeof getPdfWritingEntries>[number] } }) {
-  if (!props.entry.filePath) {
+  if (!props.entry.assetUrl) {
     return new Response("Not found", { status: 404 });
   }
 
-  return new Response(readFileSync(props.entry.filePath), {
+  return new Response(null, {
+    status: 302,
     headers: {
-      "Content-Type": "application/pdf",
+      Location: props.entry.assetUrl,
       "Content-Disposition": `inline; filename="${props.entry.fileName ?? "article.pdf"}"`
     }
   });

@@ -1,6 +1,3 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { basename, extname, join } from "node:path";
-
 export interface WritingEntry {
   title: string;
   date: string;
@@ -11,7 +8,7 @@ export interface WritingEntry {
   body?: string[];
   source?: "essay" | "pdf";
   fileName?: string;
-  filePath?: string;
+  assetUrl?: string;
 }
 
 interface PdfMetadata {
@@ -21,7 +18,16 @@ interface PdfMetadata {
   readingTime?: string;
 }
 
-const writingDirectory = join(process.cwd(), "writing");
+const pdfFiles = import.meta.glob<string>("../../writing/*.pdf", {
+  eager: true,
+  import: "default",
+  query: "?url"
+});
+
+const metadataFiles = import.meta.glob<PdfMetadata>("../../writing/*.json", {
+  eager: true,
+  import: "default"
+});
 
 const titleOverrides: Record<string, string> = {
   ai: "AI",
@@ -50,27 +56,17 @@ const toTitle = (value: string) =>
     .join(" ");
 
 const readMetadata = (baseName: string): PdfMetadata => {
-  const metadataPath = join(writingDirectory, `${baseName}.json`);
-  if (!existsSync(metadataPath)) return {};
-
-  try {
-    return JSON.parse(readFileSync(metadataPath, "utf-8")) as PdfMetadata;
-  } catch {
-    return {};
-  }
+  return metadataFiles[`../../writing/${baseName}.json`] ?? {};
 };
 
 export const getPdfWritingEntries = (): WritingEntry[] => {
-  if (!existsSync(writingDirectory)) return [];
-
-  return readdirSync(writingDirectory)
-    .filter((fileName) => extname(fileName).toLowerCase() === ".pdf")
-    .map((fileName) => {
-      const baseName = basename(fileName, extname(fileName));
-      const filePath = join(writingDirectory, fileName);
+  return Object.entries(pdfFiles)
+    .map(([path, assetUrl]) => {
+      const fileName = path.split("/").at(-1) ?? "";
+      const baseName = fileName.replace(/\.pdf$/i, "");
       const metadata = readMetadata(baseName);
       const match = baseName.match(/^(\d{4}-\d{2}-\d{2})[-_ ]+(.+)$/);
-      const date = metadata.date ?? match?.[1] ?? toIsoDate(statSync(filePath).mtime);
+      const date = metadata.date ?? match?.[1] ?? toIsoDate(new Date(0));
       const titleSource = metadata.title ?? toTitle(match?.[2] ?? baseName);
       const slug = toSlug(match?.[2] ?? baseName);
 
@@ -82,7 +78,7 @@ export const getPdfWritingEntries = (): WritingEntry[] => {
         href: `/writing/${slug}.pdf`,
         source: "pdf" as const,
         fileName,
-        filePath
+        assetUrl
       };
     })
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));

@@ -1,10 +1,12 @@
 ---
 import EssayCard from "@/components/EssayCard.astro";
-import { education, experience, resumeSkills, site, writingEntries } from "@/content/site";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { education, experience, projects, resumeSkills, site, writingEntries } from "@/content/site";
 
 const navItems = [
   { href: "#writing", label: "Writing", panel: "writing" },
-  { href: "#resume", label: "Resume", panel: "resume" }
+  { href: "#resume", label: "Resume", panel: "resume" },
+  { href: "#projects", label: "Projects", panel: "projects" }
 ];
 
 const experienceGroups = experience.reduce<
@@ -169,12 +171,25 @@ const experienceGroups = experience.reduce<
   </div>
 </section>
 
+<section id="projects" class="container -mt-8 scroll-mt-24 pb-20 md:-mt-10" data-panel="projects" hidden>
+  <div class="mb-6 max-w-[700px]">
+    <h2 class="text-xl font-semibold text-text md:text-2xl">Projects</h2>
+    <p class="mt-2 text-sm leading-6 text-muted">
+      Select product and software work.
+    </p>
+  </div>
+  <div class="grid max-w-[900px] gap-4 md:grid-cols-2">
+    {projects.map((project) => <ProjectCard {...project} />)}
+  </div>
+</section>
+
 <script>
   const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-panel]"));
   const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav]"));
 
   const setView = (view: string) => {
-    const nextView = view === "resume" ? "resume" : "writing";
+    const validViews = new Set(["writing", "resume", "projects"]);
+    const nextView = validViews.has(view) ? view : "writing";
     panels.forEach((panel) => {
       panel.hidden = panel.dataset.panel !== nextView;
     });
@@ -196,9 +211,9 @@ const experienceGroups = experience.reduce<
       event.preventDefault();
       const view = link.dataset.nav;
       setView(view);
-      history.replaceState(null, "", view === "resume" ? "#resume" : "#writing");
+      history.replaceState(null, "", `#${view}`);
     });
   });
 
-  setView(location.hash === "#resume" ? "resume" : "writing");
+  setView(location.hash.replace("#", ""));
 </script>

@@ -1,9 +1,6 @@
-import { getPdfWritingEntries, type WritingEntry } from "@/content/pdfWriting";
+import { essays } from "@/content/essays";
 
-interface EssayEntry extends WritingEntry {
-  body: string[];
-  source: "essay";
-}
+export { essays };
 
 export const site = {
   name: "Jon Cristinziano",
@@ -22,73 +19,55 @@ export const site = {
   }
 };
 
-export const essays: EssayEntry[] = [
-  {
-    title: "AI Companies May Have the World's First Real-Time Map of Startup Formation",
-    date: "2026-06-05",
-    description:
-      "AI systems may be creating a longitudinal record of how founders think, learn, react, and make decisions while building companies.",
-    readingTime: "5 min read",
-    href: "/posts/ai-companies-real-time-map-startup-formation",
-    featured: true,
-    source: "essay",
-    body: [
-      "For decades, venture capital has operated on remarkably thin data.",
-      "Investors evaluate early-stage founders through a series of static snapshots: a polished resume, a warm introduction, a pitch deck, and a handful of meetings. From those brief interactions, they try to predict a difficult question: can this team build a defining company?",
-      "The problem is that startups aren't built in snapshots. They are built through thousands of micro-decisions made in isolation over months and years as new information is received, assumptions are challenged, and strategies evolve. Until recently, that messy, iterative process was almost completely invisible to the outside world.",
-      "Artificial intelligence may be changing that.",
-      "Every day, founders spend hours interacting with large language models. They use these systems to pressure-test strategy, explore product decisions, debug technical challenges, prepare customer conversations, and evaluate tradeoffs. In doing so, they are leaving behind an unprecedented digital artifact: a longitudinal record of how they think, learn, react, and make decisions while building a company.",
-      "Consider three founder trajectories.",
-      "The Executor. This founder spends months hashing out marketplace liquidity, enterprise procurement workflows, pricing strategy, and technical architecture. Their conversations build sequentially. Early assumptions are ruthlessly discarded based on customer feedback and market evidence. Each new discussion incorporates information gathered from the last. The trajectory shows clear, compounding momentum.",
-      "The Loop. This founder asks equally sophisticated questions. The technical architecture sounds impressive. The market analysis is thoughtful. Yet the conversation repeatedly returns to the same unresolved strategic questions. New frameworks are explored, but little evidence accumulates. Progress appears substantial until viewed across a longer timeline.",
-      "The Dark Horse. This founder begins with a scattered and unconventional premise. To a traditional investor, the initial pitch might sound chaotic. But over time, a distinct pattern emerges. Customer feedback narrows the scope. New information systematically replaces old assumptions. What initially appeared random gradually becomes coherent.",
-      "To a venture capitalist sitting in a partner meeting, all three founders might look nearly identical. They may have the same credentials, the same pedigree, and the same polished deck.",
-      "But an AI system observing millions of such trajectories continuously doesn't see a snapshot. It sees a sequence.",
-      "The value isn't necessarily contained within any individual conversation. It's embedded in the progression itself.",
-      "A founder asks about pricing.",
-      "Two weeks later they return with customer feedback.",
-      "A month later they've narrowed their target market.",
-      "Six weeks later they're wrestling with implementation constraints created by earlier decisions.",
-      "Over time, those decisions form a trajectory.",
-      "For the first time, it may be possible to observe company formation itself rather than simply its outcomes.",
-      "Historically, no institution had access to this kind of longitudinal data. Venture firms saw founders when they needed capital. Accelerators reviewed applications. Recruiters evaluated resumes. Everyone operated from isolated snapshots.",
-      "AI systems sit much closer to the process.",
-      "They observe founders wrestling with customer problems before a product exists. They see strategy evolve before a company has revenue. They observe uncertainty before it becomes conviction.",
-      "This raises an interesting possibility.",
-      "Imagine training a model not on founders versus non-founders, but on founders who all appeared promising at the outset.",
-      "Some eventually built meaningful companies.",
-      "Most did not.",
-      "Could an AI system identify patterns that correlate with future outcomes? Could it detect signals that are invisible in a pitch deck? Could it recognize trajectories rather than credentials?",
-      "The answers remain unclear.",
-      "But unlike previous eras, the underlying data may finally exist.",
-      "We've seen this shift in information advantage before.",
-      "LinkedIn mapped professional identity.",
-      "GitHub mapped software creation.",
-      "For the first time, AI companies may possess enough longitudinal behavioral data to observe company formation itself.",
-      "There is, however, an important counterargument.",
-      "Venture-scale outcomes are driven by outliers. The founders who create extraordinary companies rarely resemble the average successful founder in the beginning. Many of history's most important businesses looked unconventional, confusing, or outright irrational in their earliest stages.",
-      "If models are trained on historical behavioral patterns, they may become exceptionally good at identifying founders who resemble past winners while systematically overlooking those who don't.",
-      "In other words, the same system that improves prediction could also suppress non-consensus thinking.",
-      "The most interesting question, then, is not whether behavioral data can be monetized. It almost certainly can.",
-      "The more interesting question is whether behavioral data eventually becomes a better predictor of entrepreneurial outcomes than the proxies we've relied on for decades.",
-      "For generations, investors have searched for signals in schools, resumes, prior employers, and personal networks.",
-      "AI systems may be revealing a different source of signal entirely: not who founders are, but how they build.",
-      "The strongest signal may have been hidden in the work all along."
-    ]
-  }
-];
-
-export const writingEntries = [...essays, ...getPdfWritingEntries()].sort(
+export const writingEntries = [...essays].sort(
   (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title)
 );
 
 export const projects = [
   {
-    title: "Trust Infrastructure Research",
-    status: "Exploring",
+    title: "Stealth",
+    status: "In progress",
     description:
-      "Ongoing thinking on how testing, certification, and compliance data can become more useful to software-mediated markets.",
-    imageAlt: "Abstract research notes placeholder"
+      "Building something new at the intersection of trust, commerce, and AI. Launching Summer 2026.",
+    imageSrc: "/stealth_startup_logo.jpeg",
+    imageAlt: "Stealth startup logo",
+    stack: [
+      { label: "TypeScript", href: "https://www.typescriptlang.org/" },
+      { label: "Next.js", href: "https://nextjs.org/" },
+      { label: "Postgresql", href: "https://www.postgresql.org/" },
+      { label: "AWS", href: "https://aws.amazon.com/" }
+    ]
+  },
+  {
+    title: "SimplyScrapps",
+    status: "Archived",
+    description:
+      "A mobile app concept for logging composting activity, estimating carbon impact, tracking diversion history, and redeeming rewards from local businesses.",
+    href: "https://github.com/jcristinziano1/simplyscrapps",
+    ctaLabel: "View on GitHub",
+    imageSrc: "/simplyscrapps_logo.png",
+    imageAlt: "SimplyScrapps logo",
+    stack: [
+      { label: "Flutter", href: "https://flutter.dev/" },
+      { label: "Dart", href: "https://dart.dev/" },
+      { label: "Firebase", href: "https://firebase.google.com/" }
+    ]
+  },
+  {
+    title: "SourceSMB",
+    status: "Archived",
+    description:
+      "An acquisition sourcing workspace for defining buyer preferences, discovering local businesses, saving targets, and generating AI-assisted business summaries.",
+    href: "https://github.com/jcristinziano1/sourcesmb",
+    ctaLabel: "View on GitHub",
+    imageSrc: "/sourcesmb-logo-2.png",
+    imageAlt: "SourceSMB logo",
+    stack: [
+      { label: "React", href: "https://react.dev/" },
+      { label: "Lambda", href: "https://aws.amazon.com/lambda/" },
+      { label: "Bedrock", href: "https://aws.amazon.com/bedrock/" },
+      { label: "Places API", href: "https://developers.google.com/maps/documentation/places/web-service" }
+    ]
   }
 ];
 

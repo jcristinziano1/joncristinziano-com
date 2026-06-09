@@ -19,7 +19,10 @@ const formattedDate = new Intl.DateTimeFormat("en", {
 
 <Layout title={`${post.title} | Jon Cristinziano`} description={post.description} canonical={post.href}>
   <article class="readable py-12 md:py-16">
-    <a class="focus-ring link-hover text-sm font-semibold text-muted" href="/writing">Writing</a>
+    <a class="focus-ring link-hover inline-flex items-center gap-2 text-sm font-semibold text-muted" href="/writing">
+      <span aria-hidden="true">&larr;</span>
+      <span>Writing</span>
+    </a>
     <header class="mt-8 border-b border-border pb-8">
       <div class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
         <time datetime={post.date}>{formattedDate}</time>

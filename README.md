@@ -34,7 +34,7 @@ npm run build
 5. Use these build settings:
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Node.js version: `22`
+   - Node.js version: `22.12.0` or newer
 6. Deploy.
 7. Add the custom domain `joncristinziano.com` in Cloudflare Pages and follow the DNS prompts.
 
